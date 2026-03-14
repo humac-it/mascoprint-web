@@ -56,11 +56,19 @@ export function ContactForm() {
         }),
       })
 
-      const result = await response.json()
-
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to send message')
+        const text = await response.text()
+        let errorMsg = 'Failed to send message. Please try again or contact us directly.'
+        try {
+          const result = JSON.parse(text)
+          if (result.error) errorMsg = result.error
+        } catch {
+          // Non-JSON response (e.g. 500 from server)
+        }
+        throw new Error(errorMsg)
       }
+
+      const result = await response.json()
 
       setSubmitStatus('success')
       reset()
