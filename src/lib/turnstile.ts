@@ -1,10 +1,13 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare'
+
 interface TurnstileVerifyResponse {
   success: boolean
   'error-codes'?: string[]
 }
 
 export async function verifyTurnstileToken(token: string): Promise<boolean> {
-  const secret = process.env.TURNSTILE_SECRET_KEY
+  const { env } = await getCloudflareContext({ async: true })
+  const secret = (env as Record<string, string>).TURNSTILE_SECRET_KEY ?? process.env.TURNSTILE_SECRET_KEY
   if (!secret) {
     console.error('TURNSTILE_SECRET_KEY is not configured')
     return false
