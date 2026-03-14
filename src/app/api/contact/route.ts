@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { rateLimit } from '@/lib/rate-limit'
 import { verifyTurnstileToken } from '@/lib/turnstile'
 import { sendContactEmail } from '@/lib/email'
+
+export const runtime = 'edge'
 
 interface ContactRequestBody {
   name: string
@@ -14,28 +15,16 @@ interface ContactRequestBody {
 
 export async function POST(request: NextRequest) {
   try {
-    // 1. Rate limiting
-    const forwarded = request.headers.get('x-forwarded-for')
-    const ip = forwarded?.split(',')[0]?.trim() || 'unknown'
-    const { success: withinLimit, remaining } = rateLimit(ip)
-
-    if (!withinLimit) {
-      return NextResponse.json(
-        { error: 'Too many requests. Please try again later.' },
-        { status: 429, headers: { 'Retry-After': '3600' } }
-      )
-    }
-
-    // 2. Parse body
+    // 1. Parse body
     const body: ContactRequestBody = await request.json()
     const { name, email, phone, message, turnstileToken, website } = body
 
-    // 3. Honeypot check — return fake success to not tip off bots
+    // 2. Honeypot check — return fake success to not tip off bots
     if (website) {
       return NextResponse.json({ success: true })
     }
 
-    // 4. Server-side validation
+    // 3. Server-side validation
     if (!name || name.length < 2) {
       return NextResponse.json(
         { error: 'Name is required and must be at least 2 characters.' },
@@ -58,7 +47,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 5. Turnstile verification
+    // 4. Turnstile verification
     if (!turnstileToken) {
       return NextResponse.json(
         { error: 'Please complete the CAPTCHA verification.' },
@@ -74,7 +63,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 6. Send email
+    // 5. Send email
     const result = await sendContactEmail({
       name,
       email,
@@ -89,10 +78,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    return NextResponse.json(
-      { success: true },
-      { headers: { 'X-RateLimit-Remaining': String(remaining) } }
-    )
+    return NextResponse.json({ success: true })
   } catch (error) {
     console.error('Contact form error:', error)
     return NextResponse.json(
