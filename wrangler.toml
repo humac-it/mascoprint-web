@@ -3,6 +3,14 @@ main = ".open-next/worker.js"
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
+# Environment variables (non-secret)
+# Secrets (RESEND_API_KEY, TURNSTILE_SECRET_KEY) must be set via the Cloudflare dashboard as encrypted vars.
+[vars]
+NEXT_PUBLIC_SITE_URL = "https://mascoprint.co.uk"
+NEXT_PUBLIC_GA_ID = "G-7JK6DSM205"
+NEXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAACfC_jIFRCDgHbBi"
+CONTACT_EMAIL_TO = "office@mascoprint.co.uk"
+
 # Static assets served from the edge
 [assets]
 directory = ".open-next/assets"
