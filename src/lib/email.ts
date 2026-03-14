@@ -124,6 +124,7 @@ export async function sendContactEmail(
     return { success: true }
   } catch (err) {
     console.error('Failed to send email:', err)
-    return { success: false, error: 'Failed to send email' }
+    const errMsg = err instanceof Error ? err.message : String(err)
+    return { success: false, error: errMsg }
   }
 }
