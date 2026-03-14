@@ -72,8 +72,9 @@ export async function POST(request: NextRequest) {
     })
 
     if (!result.success) {
+      console.error('Email send failed:', result.error)
       return NextResponse.json(
-        { error: 'Failed to send message. Please try again or contact us directly.' },
+        { error: `Failed to send message: ${result.error || 'Unknown error'}` },
         { status: 500 }
       )
     }
