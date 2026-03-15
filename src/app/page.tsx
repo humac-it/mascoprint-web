@@ -97,7 +97,7 @@ export default function HomePage() {
               <div className="inline-flex items-center gap-3 px-5 py-2 bg-brand-600/10 border border-brand-600/20 rounded-full mb-8">
                 <div className="w-2 h-2 bg-brand-600 rounded-full animate-pulse" />
                 <span className="text-sm font-bold text-brand-700 tracking-wide uppercase">
-                  Over 50 Years of Excellence
+                  Trusted by Industry Leaders
                 </span>
               </div>
               <h1 className="font-display text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight mb-8 leading-[0.9]">
