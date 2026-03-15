@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 import { verifyTurnstileToken } from '@/lib/turnstile'
 import { sendContactEmail } from '@/lib/email'
 
-export const runtime = 'edge'
-
 interface ContactRequestBody {
   name: string
   email: string
