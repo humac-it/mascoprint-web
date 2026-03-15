@@ -244,8 +244,8 @@ export function Header() {
 
         {/* Mobile menu */}
         <div
-          className={`lg:hidden border-t border-gray-200 overflow-hidden transition-all duration-300 ease-in-out ${
-            mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+          className={`lg:hidden border-t border-gray-200 transition-all duration-300 ease-in-out ${
+            mobileMenuOpen ? 'max-h-screen opacity-100 overflow-y-auto' : 'max-h-0 opacity-0 overflow-hidden'
           }`}
         >
           <nav className="py-4 flex flex-col space-y-1">
