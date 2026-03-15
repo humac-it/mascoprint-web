@@ -11,11 +11,6 @@ NEXT_PUBLIC_GA_ID = "G-7JK6DSM205"
 NEXT_PUBLIC_TURNSTILE_SITE_KEY = "0x4AAAAAACfC_jIFRCDgHbBi"
 CONTACT_EMAIL_TO = "office@mascoprint.co.uk"
 
-# Custom domain
-routes = [
-  { pattern = "mascoprint.co.uk", custom_domain = true }
-]
-
 # Static assets served from the edge
 [assets]
 directory = ".open-next/assets"
