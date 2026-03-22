@@ -140,57 +140,6 @@ export function BreadcrumbSchema({ items }: { items: { name: string; url: string
   )
 }
 
-export function ProductSchema({
-  name,
-  description,
-  image,
-  brand,
-  category,
-  url,
-}: {
-  name: string
-  description: string
-  image?: string
-  brand?: string
-  category?: string
-  url: string
-}) {
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'Product',
-    name,
-    description,
-    ...(image && { image }),
-    brand: {
-      '@type': 'Brand',
-      name: brand || 'Mascoprint',
-    },
-    ...(category && { category }),
-    url,
-    manufacturer: {
-      '@type': 'Organization',
-      name: 'Mascoprint Developments Ltd',
-      url: 'https://mascoprint.co.uk',
-    },
-    offers: {
-      '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
-      priceCurrency: 'GBP',
-      seller: {
-        '@type': 'Organization',
-        name: 'Mascoprint Developments Ltd',
-      },
-    },
-  }
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
-  )
-}
-
 export function FAQSchema({ faqs }: { faqs: { question: string; answer: string }[] }) {
   const schema = {
     '@context': 'https://schema.org',
